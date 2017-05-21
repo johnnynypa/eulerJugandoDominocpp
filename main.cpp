@@ -6,19 +6,19 @@
 
 using namespace std;
 
-#include "ArrayFicha.h"
+#include "ArrayFicha.h" //Esta clase es un objeto que facilita el uso de las fichas como un tipo de datos como un array
 
 typedef struct nodo *Nodo;
 typedef struct arista *Arista;
 
 
-    struct nodo{
+    struct nodo{ //Nodo del grafo
         int dato;
         nodo *sgte; 
         arista *ady; //Puntero a la lista de sus aristas
     };
 
-    struct arista{
+    struct arista{ // comunica con los otros nodos del grafo
         nodo *destino; //puntero al nodo de llegada
         bool recorrida;
         arista *sgte;
@@ -86,7 +86,7 @@ typedef struct arista *Arista;
         // printf("Nodo insertado \n");
     }
 
-    void inicializarGrafo(){
+    void inicializarGrafo(){ //Esta funcion inicializa el grafo como no dirigido
         for( int i = 0; i < 7; i++ ){
             insertarNodo(i);
         }
@@ -107,17 +107,17 @@ typedef struct arista *Arista;
         }
     }
 
-    void imprimirGrafo(){
+    void imprimirGrafo(){ // Hackea la NASA jejeje
         Nodo aux = cabeza;
         Arista aux2;
         while(aux != NULL){
             aux2 = aux->ady;
-            printf("[%i]", aux->dato);
+            cout<<"["<<aux->dato<<"]";
             while(aux2 != NULL){
-                printf("[%i]", aux2->destino->dato);
+                cout<<"["<<aux2->destino->dato<<"]";
                 aux2 = aux2->sgte;
             }
-            printf("\n");
+            cout<<endl;
             aux = aux->sgte;
         }
     }
@@ -126,7 +126,7 @@ typedef struct arista *Arista;
 
 
 
-arrayFicha fichasDisponibles(){
+void fichasDisponibles(){ //Devuelve cuantas fichas aun no han sido utilizadas
     Nodo aux = cabeza;
     Arista aux2;
     arrayFicha fichas = arrayFicha();
@@ -135,7 +135,8 @@ arrayFicha fichasDisponibles(){
         aux2 = aux->ady;
         while(aux2 !=NULL){
             if(aux2->recorrida==false){
-                fichas.push(aux->dato,aux2->destino->dato);
+                fichas.push(aux->dato,aux2->destino->dato); //Las inserta en el aarray que es retornado
+                // cout<<"["<<aux->dato<<"|"<<aux2->destino->dato<<"]"<<endl; //Esta linea las imprime
             }
             aux2 = aux2->sgte;
         }
@@ -144,21 +145,37 @@ arrayFicha fichasDisponibles(){
     return fichas;
 }
 
-void usarFicha(Ficha f){
+void usarFicha(Ficha f){ 
+    //Debe recibir un struct ficha, con los dos numeros ejemplo (2,3), esta ficha ya no estará disponible en el grafo
     Nodo aux = cabeza;
-    // Arista aux2 = aux->ady;
+    Arista aux2;
+    int mayor, menor;
+    if(f->n1 > f->n2){
+        mayor = f->n1;
+        menor = f->n2;
+    }else{
+        mayor = f->n2;
+        menor = f->n1;
+    }
     while(aux != NULL){
-
+        if(aux->dato == menor){
+            aux2 = aux->ady;
+            while( aux2 != NULL){
+                if(aux2->destino->dato == mayor){
+                    aux2->recorrida = true;
+                    break;
+                }
+                aux2 = aux2->sgte;
+            }
+        }
+        aux = aux->sgte;
     }
 }
 
-void jugarHumano(){
-
-}
 
 void menu(){
     int op = 0;
-
+    arrayFicha f = arrayFicha();
     while(true){
         cout<<"****************************************************"<<endl;
         cout<<" 1. Jugar Humano"<<endl;
@@ -173,7 +190,10 @@ void menu(){
         // printf("%i \n", op);
         switch(op){
             case 1:
-                jugarHumano();
+                // jugarHumano();
+                // f.push(2,5);
+                // usarFicha(f.getByPos(0));
+                // fichasDisponibles();
                 break;
             case 2:
                 // jugarMaquina();
@@ -186,11 +206,6 @@ void menu(){
 int main(){
     inicializarGrafo();
     imprimirGrafo();
-    printf("\n");
-    printf("\n");
-    printf("\n");
     menu();
-    printf("\n");
-    printf("\n");
     return 0;
 }

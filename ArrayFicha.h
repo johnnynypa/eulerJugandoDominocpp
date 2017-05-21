@@ -1,7 +1,7 @@
 const int MaxFichas = 21;
 typedef struct ficha *Ficha;
 
-struct ficha{
+struct ficha{ //Etructura ficha, para mover los dos numeros en un solo dato
     int n1;
     int n2;
 };
@@ -13,11 +13,11 @@ class arrayFicha{
             return (struct ficha *)malloc(sizeof(struct ficha));
         }
     public:
-        int length;
+        int length; // Campo que indica cuantas fichas hay
         arrayFicha(){
             length = 0;
         }
-        void push(int d1, int d2){
+        void push(int d1, int d2){ // Metodo que inserta un elemento en el array
             if(length < MaxFichas){
                 Ficha aux = crearFicha();
                 aux->n1 = d1;
@@ -28,7 +28,10 @@ class arrayFicha{
                 cout<<"Array lleno"<<endl;
             }
         }
-        Ficha getByPos(int p){
+        Ficha getByPos(int p){ // Metodo que retorna una ficha segun la posicion
             return this->fichas[p];
+        }
+        int tamaño(){
+            return this->length; // Metodo que indica el tamaño del array
         }
 };
