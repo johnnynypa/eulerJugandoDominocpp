@@ -9,11 +9,11 @@ struct ficha{
 class arrayFicha{
     private:
         Ficha fichas[MaxFichas];
-        int length;
         Ficha crearFicha(){
             return (struct ficha *)malloc(sizeof(struct ficha));
         }
     public:
+        int length;
         arrayFicha(){
             length = 0;
         }

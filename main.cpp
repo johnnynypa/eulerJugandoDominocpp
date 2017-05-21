@@ -90,15 +90,20 @@ typedef struct arista *Arista;
         for( int i = 0; i < 7; i++ ){
             insertarNodo(i);
         }
+        int i = 0, cont = 0;
         Nodo aux1 = cabeza;
         Nodo aux2 = cabeza;
         while( aux1 != NULL){
+            i = 0;
             while( aux2 != NULL ){
-                InsertarArista(aux1, aux2);
+                if(i>= cont)
+                    InsertarArista(aux1, aux2);
                 aux2 = aux2->sgte;
+                i++;
             }
             aux2 = cabeza;
             aux1 = aux1->sgte;
+            cont++;
         }
     }
 
@@ -125,24 +130,31 @@ arrayFicha fichasDisponibles(){
     Nodo aux = cabeza;
     Arista aux2;
     arrayFicha fichas = arrayFicha();
-    int i, cont = 0;
 
     while(aux != NULL){
         aux2 = aux->ady;
-        i = 0;
         while(aux2 !=NULL){
-            if( i >= cont && aux2->recorrida==false){
+            if(aux2->recorrida==false){
                 fichas.push(aux->dato,aux2->destino->dato);
             }
             aux2 = aux2->sgte;
-            i++;
         }
         aux = aux->sgte;
-        cont++;
     }
     return fichas;
 }
 
+void usarFicha(Ficha f){
+    Nodo aux = cabeza;
+    // Arista aux2 = aux->ady;
+    while(aux != NULL){
+
+    }
+}
+
+void jugarHumano(){
+
+}
 
 void menu(){
     int op = 0;
