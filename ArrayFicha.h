@@ -1,9 +1,10 @@
-const int MaxFichas = 21;
+const int MaxFichas = 28;
 typedef struct ficha *Ficha;
 
 struct ficha{ //Etructura ficha, para mover los dos numeros en un solo dato
     int n1;
     int n2;
+    ficha *sgte;
 };
 
 class arrayFicha{
@@ -31,7 +32,7 @@ class arrayFicha{
         Ficha getByPos(int p){ // Metodo que retorna una ficha segun la posicion
             return this->fichas[p];
         }
-        int tamaño(){
-            return this->length; // Metodo que indica el tamaño del array
+        int tamano(){
+            return this->length; // Metodo que indica el tamano del array
         }
 };
