@@ -183,7 +183,6 @@ void menu(){
             cin.ignore(256, '\n');
             op = 4;
         }
-        // printf("%i \n", op);
         switch(op){
             case 1:
                 // jugarHumano();
@@ -196,6 +195,10 @@ void menu(){
                 break;
             case 3:
                 exit(0);
+            case 4:
+                cout<<"Digite una opcion valida"<<endl;
+                system("pause");
+                break;
         }
     }
 }
