@@ -6,11 +6,11 @@
 
 using namespace std;
 
-#include "ArrayFicha.h" //Esta clase es un objeto que facilita el uso de las fichas como un tipo de datos como un array
+#include "ArrayFicha.h" //Esta clase facilita el uso de las fichas como un tipo de datos array
 
 typedef struct nodo *Nodo;
 typedef struct arista *Arista;
-
+typedef struct lista *Lista;
 
 struct nodo{ //Nodo del grafo
     int dato;
@@ -24,6 +24,13 @@ struct arista{ // comunica con los otros nodos del grafo
     arista *sgte;
 };
 
+struct lista{
+    Nodo nodo;
+    lista *sgte;
+    lista *atras;
+};
+
+Lista ptr;
 Nodo cabeza; //Primer nodo de la multilista del grafo.
 
 /*              Crear Nodo                  */
@@ -122,7 +129,7 @@ void imprimirGrafo(){ // Hackea la NASA jejeje
     }
 }
 
-void fichasDisponibles(){ //Devuelve cuantas fichas aun no han sido utilizadas
+arrayFicha fichasDisponibles(){ //Devuelve cuantas fichas aun no han sido utilizadas
     Nodo aux = cabeza;
     Arista aux2;
     arrayFicha fichas = arrayFicha();
@@ -132,13 +139,13 @@ void fichasDisponibles(){ //Devuelve cuantas fichas aun no han sido utilizadas
         while(aux2 !=NULL){
             if(aux2->recorrida==false){
                 fichas.push(aux->dato,aux2->destino->dato); //Las inserta en el aarray que es retornado
-                cout<<"["<<aux->dato<<"|"<<aux2->destino->dato<<"]"<<endl; //Esta linea las imprime
+                // cout<<"["<<aux->dato<<"|"<<aux2->destino->dato<<"]"<<endl; //Esta linea las imprime
             }
             aux2 = aux2->sgte;
         }
         aux = aux->sgte;
     }
-    // return fichas;
+    return fichas;
 }
 
 void usarFicha(Ficha f){ 
@@ -202,9 +209,16 @@ void menu(){
         }
     }
 }
+
+#include "fleury.h"
+
 int main(){
+    srand(time(NULL));
     inicializarGrafo();
     imprimirGrafo();
-    menu();
+    cabeza->ady->sgte->recorrida = true;
+    fleury(cabeza);
+    // menu();
+    // fichasDisponibles();
     return 0;
 }
