@@ -139,7 +139,7 @@ arrayFicha fichasDisponibles(){ //Devuelve cuantas fichas aun no han sido utiliz
         while(aux2 !=NULL){
             if(aux2->recorrida==false){
                 fichas.push(aux->dato,aux2->destino->dato); //Las inserta en el aarray que es retornado
-                // cout<<"["<<aux->dato<<"|"<<aux2->destino->dato<<"]"<<endl; //Esta linea las imprime
+                cout<<"["<<aux->dato<<"|"<<aux2->destino->dato<<"]"<<endl; //Esta linea las imprime
             }
             aux2 = aux2->sgte;
         }
@@ -210,15 +210,17 @@ void menu(){
     }
 }
 
+bool terminado = false;
 #include "fleury.h"
 
 int main(){
     srand(time(NULL));
     inicializarGrafo();
     imprimirGrafo();
-    cabeza->ady->sgte->recorrida = true;
-    fleury(cabeza);
-    // menu();
-    // fichasDisponibles();
+    // cabeza->ady->sgte->recorrida = true;
+
+    IniciandFleury(3);
+    
+    
     return 0;
 }
