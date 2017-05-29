@@ -221,6 +221,11 @@ int main(){
 
     IniciandFleury(3);
     
+    cout<<endl;
+    for(int i = 0; i<28; i++){
+        cout<<"["<<FichasMaquina.getByPos(i)->n1<<"|"<<FichasMaquina.getByPos(i)->n2<<"] ";
+        cout<<endl;
+    }
     
     return 0;
 }

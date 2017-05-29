@@ -19,6 +19,9 @@ typedef struct NO{
 	int y;
 } NO;
 
+
+arrayFicha FichasMaquina;
+int contFichas = 0;
 int termina = 0;
 int NFichas = 0;
 VVI grafo;
@@ -38,7 +41,7 @@ void imprime(VVI& dist){
 
 
 /**
- * conta o numero de vizinhos de um grafo nao direcionado
+ * Cuenta el número de vecinos
  */
 int contaVizinhosDeV(int v){
 	int contador = 0;
@@ -53,8 +56,7 @@ int contaVizinhosDeV(int v){
 	return contador;
 }
 
-
-// deep fisrt search para contar os vertices alcancados apartir de v
+//para contar os vertices alcancados apartir de v
 int dfsContador(int v, bool visitado[]){
 	visitado[v] = true;
 	int contador = 0;
@@ -66,11 +68,10 @@ int dfsContador(int v, bool visitado[]){
 	return contador;
 }
 
-//verifica se u-v nao eh um caminho valido: v eh unico possivel caminho ou nao eh ponte
+// verifica se u-v nao eh um caminho valido: v eh unico possivel caminho ou nao eh ponte
 // The function to check if edge u-v can be considered as next edge in
 // Euler Tout
-bool ehAdjacenciaValida(int u, int v)
-{
+bool ehAdjacenciaValida(int u, int v){
 	//se v eh o unico caminho possivel
 	int cont=0;
 	for(int j=0;j<V;++j){
@@ -105,8 +106,7 @@ int numAleatorio(){
     return rand() % 7;
 }
 
-void removerAresta(int u, int v)
-{
+void removerAresta(int u, int v){
 	grafo[u][v]=grafo[v][u]=INF;
 }
 
@@ -115,12 +115,11 @@ void RestaurarArista(int u, int v){
 	grafo[u][v]=grafo[v][u]=0;
 }
 
-void adicionarAresta(int u, int v)
-{
+void adicionarAresta(int u, int v){
 	grafo[u][v]=grafo[v][u]=1;
 }
 
-int contFichas = 0;
+
 
 void fleury(int u, int ant){
 	for(int i = 0; i<1000000; i++){
@@ -151,7 +150,8 @@ void fleury(int u, int ant){
 			if(sw){	
 				cont=0;
 
-				cout << u << "-" << ale << "  ";
+				// cout << u << "-" << ale << "  ";
+                FichasMaquina.push(u,ale);
 				contFichas++;
 
 				NFichas++;
@@ -172,8 +172,6 @@ void fleury(int u, int ant){
 }
 
 
-
-
 void IniciandFleury(int inicio1){
 	srand(time(NULL));
 	while(true){
@@ -182,6 +180,7 @@ void IniciandFleury(int inicio1){
 		if(V==0)
             break;
 		do{
+            /* Iniciando el grafo como matriz */
 			contFichas = 0;
 			grafo = VVI(V,VI(V,INF));
 			for(int i=0;i<V;++i){
@@ -197,11 +196,12 @@ void IniciandFleury(int inicio1){
 			
 			NFichas = 0;
 			fleury(inicio1, NULL);
-			cout<<"Se repite"<<endl;
-			if(contFichas>27)
-				break;
+
+			if(contFichas>27){ //Si ya hizo las 28 
+                break;
+            }
+            FichasMaquina.reiniciar();
 		}while(true);
-		cout<<termina;
 		break;
 	}
 	return;

@@ -35,4 +35,9 @@ class arrayFicha{
         int tamano(){
             return this->length; // Metodo que indica el tamano del array
         }
+        void reiniciar(){
+            for(int i = 0; i<28;i++)
+                this->fichas[i] = crearFicha();
+            this->length = 0;
+        }
 };
