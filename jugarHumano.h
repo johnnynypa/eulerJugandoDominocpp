@@ -1,5 +1,5 @@
 arrayFicha FichasHumano;
-
+int SegundosHumano;
 void usarFicha(Ficha f){
     //Debe recibir un struct ficha, con los dos numeros ejemplo (2,3), esta ficha ya no estará disponible en el grafo
     Nodo aux = cabeza;
@@ -65,9 +65,25 @@ Ficha seleccionarFicha(){
     }while(true);
 }
 
+void intercambiar(Ficha uso){
+    int aux = uso->n1;
+    uso->n1 = uso->n2;
+    uso->n2 = aux;
+}
+
 void jugando(){
     Ficha uso;
+    int op = 0;
     while(true){
+        if(FichasHumano.length == 28){
+            cout<<" * * * * Terminaste * * * * "<<endl;
+            if(FichasHumano.getByPos(0)->n1 == FichasHumano.ultimo()->n2 ){
+                cout<<"Hiciste camino Perfecto"<<endl;
+            }else{
+                cout<<"Hiciste camino Imperfecto"<<endl;
+            }
+            break;
+        }
         system("clear");
         for(int i = 1; i <= FichasHumano.length; i++){
             cout<<"["<<FichasHumano.getByPos(i-1)->n1<<"|"<<FichasHumano.getByPos(i-1)->n2<<"]-";
@@ -76,6 +92,19 @@ void jugando(){
         uso = seleccionarFicha();
         cout<<"La ficha seleccionada es: "<<"["<<uso->n1<<"|"<<uso->n2<<"]"<<endl;
         if(!FichasHumano.ultimo()){ //Si es la primera ficha
+            //Preguntar en que direccion la usará;
+            cout<<"Seleccione como la usará"<<endl;
+            cout<<"1. ["<<uso->n1<<"|"<<uso->n2<<"]    2. ["<<uso->n2<<"|"<<uso->n1<<"]"<<endl;
+            cin>>op;
+            if(cin.fail()){
+                cin.clear();
+                cin.ignore(256, '\n');
+                op = 1;
+            }
+            if(op == 2){
+                intercambiar(uso);
+            }
+
             usarFicha(uso);
             FichasHumano.pushFicha(uso);
             continue;
@@ -84,28 +113,42 @@ void jugando(){
             usarFicha(uso);
             FichasHumano.pushFicha(uso);
         }else{
-            cout<<"Perdiste"<<endl;
-            cout<<"La ficha seleccionada no continua el ciclo "<<endl;
-            // system("pause");
-            break;
+            if(uso->n2 == FichasHumano.ultimo()->n2){
+                intercambiar(uso);
+                usarFicha(uso);
+                FichasHumano.pushFicha(uso);
+            }else{
+                cout<<"Perdiste"<<endl;
+                cout<<"La ficha seleccionada no continua el ciclo "<<endl;
+                // system("pause");
+                break;
+            }
         }
 
     }
 }
 
 void jugarHumano(){
+    time_t t_ini, t_fin;
     FichasHumano.reiniciar();
+    t_ini = time(0);
     jugando();
+    t_fin = time(0);
+
+    cout<<"Tu tiempo fue: "<<t_fin-t_ini<<" segundos"<<endl<<endl;
+    SegundosHumano = t_fin-t_ini;
     desmarcarTodasHumano();
-    // arrayFicha h = fichasDisponibles();
-    // cout<<"*******************************"<<endl;
-    // usarFicha(h.getByPos(3) );
-    // cout<<"*******************************"<<endl;
-    // h = fichasDisponibles();
-    // usarFicha(h.getByPos(7));
-    // cout<<"*******************************"<<endl;
-    // h = fichasDisponibles();
-    // usarFicha(h.getByPos(14) );
-    // cout<<"*******************************"<<endl;
-    // h = fichasDisponibles();
 }
+
+// FichasHumano.reiniciar();
+//     clock_t t_ini, t_fin;
+//     double secs;
+
+//     t_ini = clock();
+//     jugando();
+//     t_fin = clock();
+
+//     secs = (double)(t_fin - t_ini) / 1000;
+//     cout<<secs * 1000.0<<" milisegundos\n"<<endl;
+    
+//     desmarcarTodasHumano();

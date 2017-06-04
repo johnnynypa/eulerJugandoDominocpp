@@ -143,17 +143,47 @@ void desmarcarTodasHumano(){
 }
 
 #include "jugarHumano.h"
-
+int segundosMaquina;
 bool terminado = false;
 #include "fleury.h"
+
+void jugarMaquina(){
+    time_t t_ini, t_fin;
+
+    t_ini = time(0);
+    IniciandFleury( FichasHumano.getByPos(0)->n1 ); //Juega la maquina con el inicio del humano
+    t_fin = time(0);
+
+    segundosMaquina = t_fin-t_ini;
+
+    //Mostramos resultado
+    
+}
+
+void MostrarResultados(){
+    system("clear");
+    cout<<endl<<"  * * * * Maquina * * * * "<<endl;
+    for(int i = 0; i<28; i++){
+        cout<<"["<<FichasMaquina.getByPos(i)->n1<<"|"<<FichasMaquina.getByPos(i)->n2<<"]-";
+    }
+    cout<<endl<<endl;
+
+    cout<<endl<<"  * * * * Tu * * * * "<<endl;
+    for(int i = 0; i<28; i++){
+        cout<<"["<<FichasHumano.getByPos(i)->n1<<"|"<<FichasHumano.getByPos(i)->n2<<"]-";
+    }
+    cout<<endl<<endl;
+    cout<<"Tu tiempo: "<<SegundosHumano<<endl;
+    cout<<"Tiempo PC: "<<segundosMaquina<<endl;
+    FichasMaquina.reiniciar();
+}
 
 void menu(){
     int op = 0;
     while(true){
-        cout<<"****************************************************"<<endl;
-        cout<<" 1. Jugar Humano"<<endl;
-        cout<<" 2. Jugar Maquina"<<endl;
-        cout<<" 3. Salir"<<endl;
+        cout<<endl<<endl<<"****************************************************"<<endl;
+        cout<<" 1. Jugar"<<endl;
+        cout<<" 2. Salir"<<endl;
         cin>>op;
         if(cin.fail()){
             cin.clear();
@@ -163,20 +193,13 @@ void menu(){
         switch(op){
             case 1:
                 jugarHumano();
+                jugarMaquina();
+                MostrarResultados();
                 break;
             case 2:
-                IniciandFleury(3);
-    
-                cout<<endl;
-                for(int i = 0; i<28; i++){
-                    cout<<"["<<FichasMaquina.getByPos(i)->n1<<"|"<<FichasMaquina.getByPos(i)->n2<<"] ";
-                    cout<<endl;
-                }
-                FichasMaquina.reiniciar();
-                break;
-            case 3:
                 exit(0);
-            case 4:
+                break;
+            default:
                 cout<<"Digite una opcion valida"<<endl;
                 system("pause");
                 break;
