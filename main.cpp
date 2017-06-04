@@ -129,6 +129,19 @@ void imprimirGrafo(){ // Hackea la NASA jejeje
     }
 }
 
+void desmarcarTodasHumano(){
+    Nodo aux = cabeza;
+    Arista auxA;
+    while(aux){
+        auxA = aux->ady;
+        while(auxA){
+            auxA->recorrida = false;
+            auxA = auxA->sgte;
+        }
+        aux = aux->sgte;
+    }
+}
+
 #include "jugarHumano.h"
 
 bool terminado = false;

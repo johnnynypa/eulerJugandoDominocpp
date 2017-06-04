@@ -29,6 +29,16 @@ class arrayFicha{
                 cout<<"Array lleno"<<endl;
             }
         }
+        void pushFicha(Ficha f){
+            if(f){
+                if(this->length < MaxFichas){
+                    this->fichas[length] = f;
+                    this->length++;
+                }else{
+                    cout<<"Array lleno"<<endl;
+                }
+            }
+        }
         Ficha getByPos(int p){ // Metodo que retorna una ficha segun la posicion
             return this->fichas[p];
         }
@@ -41,6 +51,9 @@ class arrayFicha{
             this->length = 0;
         }
         Ficha ultimo(){
-            return this->fichas[this->length];
+            if(this->length>0){
+                return this->fichas[this->length-1];
+            }
+            return NULL;
         }
 };

@@ -1,6 +1,6 @@
 arrayFicha FichasHumano;
 
-void usarFicha(Ficha f){ 
+void usarFicha(Ficha f){
     //Debe recibir un struct ficha, con los dos numeros ejemplo (2,3), esta ficha ya no estará disponible en el grafo
     Nodo aux = cabeza;
     Arista aux2;
@@ -49,7 +49,6 @@ Ficha seleccionarFicha(){
     int op = 0;
     /* Mostrar */
     do{
-        system("clear");
         for(int i = 1; i <= h.length; i++){
             cout<<i<<". ["<<h.getByPos(i-1)->n1<<"|"<<h.getByPos(i-1)->n2<<"]"<<endl;
         }
@@ -66,10 +65,38 @@ Ficha seleccionarFicha(){
     }while(true);
 }
 
+void jugando(){
+    Ficha uso;
+    while(true){
+        system("clear");
+        for(int i = 1; i <= FichasHumano.length; i++){
+            cout<<"["<<FichasHumano.getByPos(i-1)->n1<<"|"<<FichasHumano.getByPos(i-1)->n2<<"]-";
+        }
+        cout<<endl<<"____________________________________________________"<<endl;
+        uso = seleccionarFicha();
+        cout<<"La ficha seleccionada es: "<<"["<<uso->n1<<"|"<<uso->n2<<"]"<<endl;
+        if(!FichasHumano.ultimo()){ //Si es la primera ficha
+            usarFicha(uso);
+            FichasHumano.pushFicha(uso);
+            continue;
+        }
+        if(uso->n1 == FichasHumano.ultimo()->n2){ // Si es consecuente
+            usarFicha(uso);
+            FichasHumano.pushFicha(uso);
+        }else{
+            cout<<"Perdiste"<<endl;
+            cout<<"La ficha seleccionada no continua el ciclo "<<endl;
+            // system("pause");
+            break;
+        }
+
+    }
+}
+
 void jugarHumano(){
     FichasHumano.reiniciar();
-    Ficha uso = seleccionarFicha();
-    cout<<"La ficha seleccionada es: "<<"["<<uso->n1<<"|"<<uso->n2<<"]"<<endl;
+    jugando();
+    desmarcarTodasHumano();
     // arrayFicha h = fichasDisponibles();
     // cout<<"*******************************"<<endl;
     // usarFicha(h.getByPos(3) );
