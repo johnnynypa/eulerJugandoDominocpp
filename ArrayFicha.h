@@ -19,7 +19,7 @@ class arrayFicha{
             length = 0;
         }
         void push(int d1, int d2){ // Metodo que inserta un elemento en el array
-            if(length < MaxFichas){
+            if(this->length < MaxFichas){
                 Ficha aux = crearFicha();
                 aux->n1 = d1;
                 aux->n2 = d2;
@@ -39,5 +39,8 @@ class arrayFicha{
             for(int i = 0; i<28;i++)
                 this->fichas[i] = crearFicha();
             this->length = 0;
+        }
+        Ficha ultimo(){
+            return this->fichas[this->length];
         }
 };
