@@ -173,8 +173,8 @@ void MostrarResultados(){
         cout<<"["<<FichasHumano.getByPos(i)->n1<<"|"<<FichasHumano.getByPos(i)->n2<<"]-";
     }
     cout<<endl<<endl;
-    cout<<"Tu tiempo: "<<SegundosHumano<<endl;
-    cout<<"Tiempo PC: "<<segundosMaquina<<endl;
+    cout<<"Tu tiempo: "<<SegundosHumano<<"Segundos"<<endl;
+    cout<<"Tiempo PC: "<<segundosMaquina<<"Segundos"<<endl;
     FichasMaquina.reiniciar();
 }
 
